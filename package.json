@@ -1,0 +1,26 @@
+{
+  "name": "daily_message",
+  "version": "1.0.0",
+  "description": "An API that will provide you a MOTD via an endpoint. The messages can be provided via a json file or can be added via the API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thorsten1/daily_message.git"
+  },
+  "keywords": [
+    "API",
+    "REST"
+  ],
+  "author": "Thorsten Roesler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Thorsten1/daily_message/issues"
+  },
+  "homepage": "https://github.com/Thorsten1/daily_message#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
