@@ -1,0 +1,11 @@
+{
+  "disable_authorization": false,
+  "unauthorised_user_mode": false,
+  "development": false,
+  "user_endpoints": [
+    {
+      "route": "/",
+      "method": "GET"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "name": "daily_message",
   "version": "1.0.0",
   "description": "An API that will provide you a MOTD via an endpoint. The messages can be provided via a json file or can be added via the API",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
