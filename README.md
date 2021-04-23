@@ -3,8 +3,8 @@ This project provides a small Express based REST API to run on [repl.it](https:/
 
 ## security
 Because this is just a small project that shouldn't store sensitive information there is no authentication but just an 
-authorisation. For this to work you need to export the following environment variables: <code> READ_ONLY_TOKEN
-</code> and <code>ADMIN_TOKEN</code>. The first one is needed when you want to restrict the Read access, and the second 
+authorisation. For this to work you need to export the following environment variables: <code> USER_TOKEN
+</code> and <code>ADMIN_TOKEN</code>. The first one is needed when you want to restrict the User access, and the second 
 one for all calls that edit the database.
 
 ## Local testing

@@ -15,6 +15,7 @@ app.use(cors());
 //Add authorization middleware
 let authorization=require('./src/authorization');
 app.use(authorization.isAuthorised)
+app.use(authorization.needsAdminRights)
 // Add error handling middleware
 let error_handling=require('./src/error_handling');
 app.use(error_handling)
