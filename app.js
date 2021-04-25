@@ -11,7 +11,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("combined"));
 app.use(helmet());
-app.use(cors());
 //Add authorization middleware
 let authorization=require('./src/authorization');
 app.use(authorization.isAuthorised)

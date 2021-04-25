@@ -12,7 +12,6 @@ To test or debug this project locally you need to provide the environment variab
 <br> This variable needs to be refreshed because the url token will expire. The respone would be something like <code>
 invalid token: token is expired by ...</code>
 ### ToDos
-- Add authorization Tokens for destructive and maybe also non-destructive operations
 - Add Daily check so only one message will be prompted per day (always the same)
 - Maybe add edit endpoint
 - Make use of morgan's extended logging
