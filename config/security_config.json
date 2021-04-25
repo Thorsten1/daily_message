@@ -2,6 +2,8 @@
   "disable_authorization": false,
   "unauthorised_user_mode": false,
   "development": false,
+  "key_prefix": "daily_",
+  "key_length": 32,
   "user_endpoints": [
     {
       "route": "/",

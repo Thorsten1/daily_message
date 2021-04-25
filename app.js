@@ -1,16 +1,24 @@
 // Requirements / Imports
 const express = require('express'); // express library
 const bodyParser = require('body-parser');  // Node.js body parsing middleware.
-const cors = require('cors'); // Set CORS Headers
+const rateLimit = require("express-rate-limit"); //rate limiting
 const helmet = require('helmet'); // Set secure HTTP Headers
 const morgan = require('morgan'); // Extended Logging
 // Start of the actual App
 const app = express();
 // Add Middleware
+const limiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 hour
+    max: 10 // limit each IP to x requests per windowMs
+});
+
+//  apply to all requests
+app.use(limiter);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("combined"));
 app.use(helmet());
+app.use(helmet.xssFilter());
 //Add authorization middleware
 let authorization=require('./src/authorization');
 app.use(authorization.isAuthorised)
