@@ -22,13 +22,8 @@ module.exports = {
 
         // if authorization is disabled skip checks
         // NOT RECOMMENDED!
-        if (config_data.disable_authorization) {
-            res.locals.admin = true
-            next()
-        }
-        // if the provided token is the Admin token
-        else if (authHeader === adminToken) {
-            // set admin to true and proceed
+        // or if the provided token is the Admin token
+        if (config_data.disable_authorization || authHeader === adminToken) {
             res.locals.admin = true
             next()
         }
