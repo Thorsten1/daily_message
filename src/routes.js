@@ -1,6 +1,6 @@
 const Client = require("@replit/database"); //repl.it key/value database
 const client = new Client(); //initialise repl.it db client
-const config_data = require('../config/security_config.json') // config file path
+const config_data = require('../config/security_config.json')
 const {validateKey, validateValue} = require('./input_validation');
 
 module.exports = function (app){
@@ -12,7 +12,7 @@ module.exports = function (app){
         // get random element
         let result_key = keys[Math.floor(Math.random() * keys.length)]
         let result = await client.get(result_key, {raw:true})
-        return res.send(result)
+        return res.json({"message": result})
     });
 
     // get endpoint to retrieve specific messages via its key

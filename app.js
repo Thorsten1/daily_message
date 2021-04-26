@@ -11,6 +11,9 @@ const limiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour
     max: 10 // limit each IP to x requests per windowMs
 });
+const swaggerUi = require('swagger-ui-express'); // swagger ui package
+const YAML = require('yamljs'); // yaml parser for swagger file
+const swaggerDocument = YAML.load('./swagger.yaml'); // load swagger file
 
 //  apply to all requests
 app.use(limiter);
@@ -19,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("combined"));
 app.use(helmet());
 app.use(helmet.xssFilter());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); // show swagger ui
 //Add authorization middleware
 let authorization=require('./src/authorization');
 app.use(authorization.isAuthorised)

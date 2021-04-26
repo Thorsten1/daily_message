@@ -60,9 +60,9 @@ module.exports = {
             next()
         }
         else{
-            return res.status(401).json({
-                status: 401,
-                message: 'UNAUTHORIZED: The requested endpoint requires admin rights but you have only user access.'
+            return res.status(403).json({
+                status: 403,
+                message: 'FORBIDDEN: The requested endpoint requires admin rights but you have only user access.'
             })
         }
     }
