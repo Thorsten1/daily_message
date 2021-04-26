@@ -4,6 +4,7 @@
   "development": false,
   "key_prefix": "daily_",
   "key_length": 32,
+  "value_length": 1024,
   "user_endpoints": [
     {
       "route": "/",
