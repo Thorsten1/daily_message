@@ -1,48 +1,44 @@
-swagger: "2.0"
+openapi: "3.0.3"
 info:
   description: "This is a small API to retrieve a daily message. e.g. for an iOS shortcut or widget"
-  version: "1.0.0"
+  version: "1.0.1"
+  termsOfService: "#/info/termsOfService"
   title: "Daily Message"
   contact:
     name: "Thorsten Rösler"
     email: "ynmmupcr9@relay.firefox.com"
 
-host: "caa28cc3-9e18-43d5-a5b8-930c98ca35bc.id.repl.co"
-basePath: "/"
-tags:
-- name: "/"
-  description: "When calling the baseURL you receive your daily message"
-- name: "manage"
-  description: "Here you can manage the keys the data for your daily messages"
+servers:
+  - url: "https://caa28cc3-9e18-43d5-a5b8-930c98ca35bc.id.repl.co"
+    description: "The replit.com URL"
 
-schemes:
-- "https"
 paths:
-  /:
+  /daily-message:
     get:
+      description: "Receive a daily message"
       tags:
-        - "/"
+        - "daily-message"
       summary: "Returns the daily message"
       operationId: "getDailyMessage"
-      produces:
-        - "application/json"
       responses:
-        200:
+        "200":
           description: "You receive your daily message"
-          schema:
-            $ref: '#/definitions/GetResponseScheme'
-        401:
-          $ref: '#/responses/401'
-        403:
-          $ref: '#/responses/403'
-        404:
-          $ref: '#/responses/404'
-        429:
-          $ref: '#/responses/429'
-        500:
-          $ref: '#/responses/500'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetResponseScheme'
+        "401":
+          $ref: '#/components/responses/401'
+        "403":
+          $ref: '#/components/responses/403'
+        "404":
+          $ref: '#/components/responses/404'
+        "429":
+          $ref: '#/components/responses/429'
+        "500":
+          $ref: '#/components/responses/500'
         default:
-          $ref: '#/responses/404'
+          $ref: '#/components/responses/404'
       security:
         - userToken: []
           
@@ -53,78 +49,81 @@ paths:
       summary: "Get a message by its key"
       description: "Returns the message that belongs to the provided key"
       operationId: "getMessageById"
-      produces:
-      - "application/json"
       parameters:
-      - name: "key"
-        in: "path"
+      - in: "path"
+        name: "key"
         description: "Key of the message to return"
         required: true
-        type: "string"
-        pattern: "^[a-zA-Z\_]+$"
-        maxLength: 32
+        schema:
+          type: "string"
+          pattern: "^[a-zA-Z\_]+$"
+          maxLength: 32
       responses:
-        200:
+        "200":
           description: "You receive the message for the requested key"
-          schema:
-            $ref: '#/definitions/GetResponseScheme'
-        401:
-          $ref: '#/responses/401'
-        403:
-          $ref: '#/responses/403'
-        404:
-          $ref: '#/responses/404'
-        422:
-          $ref: '#/responses/422'
-        429:
-          $ref: '#/responses/429'
-        500:
-          $ref: '#/responses/500'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetResponseScheme'
+        "401":
+          $ref: '#/components/responses/401'
+        "403":
+          $ref: '#/components/responses/403'
+        "404":
+          $ref: '#/components/responses/404'
+        "422":
+          $ref: '#/components/responses/422'
+        "429":
+          $ref: '#/components/responses/429'
+        "500":
+          $ref: '#/components/responses/500'
         default:
-          $ref: '#/responses/404'
+          $ref: '#/components/responses/404'
       security:
         - userToken: []
     post:
       tags:
       - "manage"
       summary: "Add a new Message"
-      description: ""
+      description: "Adds a message to the database. If it starts with the defined prefix (default: daily_) it will be used for daily-message"
       operationId: "addMessage"
-      consumes:
-      - "application/json"
       parameters:
-      - name: "key"
-        in: "path"
+      - in: "path"
+        name: "key"
         description: "Key of the message to add"
         required: true
-        type: "string"
-        pattern: "^[a-zA-Z\_]+$"
-        maxLength: 32
-      - name: "value"
-        in: "body"
-        required: true
+        schema:
+          type: "string"
+          pattern: "^[a-zA-Z\_]+$"
+          maxLength: 32
+      requestBody:
         description: "The Message to set"
-        schema: 
-          $ref: '#/definitions/ValueScheme'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValueScheme'
       responses:
-        200:
+        "200":
           description: "You receive the message for the requested key"
-          schema:
-            $ref: '#/definitions/EditResponseScheme'
-        401:
-          $ref: '#/responses/401'
-        403:
-          $ref: '#/responses/403'
-        404:
-          $ref: '#/responses/404'
-        422:
-          $ref: '#/responses/422'
-        429:
-          $ref: '#/responses/429'
-        500:
-          $ref: '#/responses/500'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditResponseScheme'
+        "401":
+          $ref: '#/components/responses/401'
+        "403":
+          $ref: '#/components/responses/403'
+        "404":
+          $ref: '#/components/responses/404'
+        "422":
+          $ref: '#/components/responses/422'
+        "429":
+          $ref: '#/components/responses/429'
+        "500":
+          $ref: '#/components/responses/500'
         default:
-          $ref: '#/responses/404'
+          $ref: '#/components/responses/404'
       security:
         - adminToken: []
     delete:
@@ -134,149 +133,173 @@ paths:
       description: "Deletes the message that belongs to the provided key if present"
       operationId: "deleteMessage"
       parameters:
-      - name: "key"
-        in: "path"
+      - in: "path"
+        name: "key"
         description: "Key of the message to return"
         required: true
-        type: "string"
-        pattern: "^[a-zA-Z\_]+$"
-        maxLength: 32
+        schema:
+          type: "string"
+          pattern: "^[a-zA-Z\_]+$"
+          maxLength: 32
       responses:
-        200:
+        "200":
           description: "You receive the message for the requested key"
-          schema:
-            $ref: '#/definitions/EditResponseScheme'
-        401:
-          $ref: '#/responses/401'
-        403:
-          $ref: '#/responses/403'
-        404:
-          $ref: '#/responses/404'
-        422:
-          $ref: '#/responses/422'
-        429:
-          $ref: '#/responses/429'
-        500:
-          $ref: '#/responses/500'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditResponseScheme'
+        "401":
+          $ref: '#/components/responses/401'
+        "403":
+          $ref: '#/components/responses/403'
+        "404":
+          $ref: '#/components/responses/404'
+        "422":
+          $ref: '#/components/responses/422'
+        "429":
+          $ref: '#/components/responses/429'
+        "500":
+          $ref: '#/components/responses/500'
         default:
-          $ref: '#/responses/404'
+          $ref: '#/components/responses/404'
       security:
         - adminToken: []       
 
-securityDefinitions:
-  adminToken:
-    type: "apiKey"
-    name: "authorization"
-    description: "The ADMIN_TOKEN for all admin actions"
-    in: "header"
-  userToken:
-    type: "apiKey"
-    name: "authorization"
-    description: "The USER_TOKEN for all user actions"
-    in: "header"
+components:
+  securitySchemes:
+    adminToken:
+      type: "apiKey"
+      name: "authorization"
+      description: "The ADMIN_TOKEN for all admin actions"
+      in: "header"
+    userToken:
+      type: "apiKey"
+      name: "authorization"
+      description: "The USER_TOKEN for all user actions"
+      in: "header"
+  schemas:
+    EditResponseScheme:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: "A success message"
+          example: "Your key was successfully added or deleted"
+          maxLength: 64
+          pattern: "^[a-zA-Z \_.]+$"
+    GetResponseScheme:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: "The message Text"
+          example: "My inspirational quote to brighten your day"
+          maxLength: 1024
+          pattern: "^[a-zA-Z0-9 !.?()']+$"
+    ValueScheme:
+      type: object
+      required:
+        - value
+      properties:
+        value:
+          type: string
+          description: "The message Text"
+          example: "My inspirational quote to brighten your day"
+          maxLength: 1024
+          pattern: "^[a-zA-Z0-9 !.?()']+$"
+    Error:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        code:
+          type: integer
+          description: "The status code of the error"
+          example: 401
+          minimum: 200
+          maximum: 599
+          format: int32
+        message:
+          type: string
+          description: 'The cause of the Error.'
+    ValidationError:
+      type: object
+      required:
+        - value
+        - msg
+        - param
+        - location
+      properties:
+        value:
+          type: string
+          description: "The invalid Value"
+          maxLength: 32
+        msg:
+          type: string
+          format: string
+          description: 'The Error message.'
+          maxLength: 2048
+        param:
+          type: string
+          description: "The invalid parameter"
+          example: "key"
+          maxLength: 64
+        location:
+          type: "string"
+          description: "Where the invalid Parameter is located"
+          maxLength: 16
+  responses:
+    "401":
+      description: "Invalid Authorization Token"
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    "403":
+      description: "Forbidden: The rewuest requires Admin access"
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    "404":
+      description: "Not Found"
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    "422":
+      description: "Unprocessable Entity: The Key was not in the right format"
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ValidationError'
+    "429":
+      description: "To Many Requests"
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    "500":
+      description: "Authorization isn't configured properly"
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
 
-definitions:
-  EditResponseScheme:
-    type: object
-    required:
-      - message
-    properties:
-      message:
-        type: string
-        description: "A success message"
-        example: "Your key was successfully added/deleted"
-        maxLength: 64
-        pattern: "^[a-zA-Z\_]+$"
-  GetResponseScheme:
-    type: object
-    required:
-      - message
-    properties:
-      message:
-        type: string
-        description: "The message Text"
-        example: "My inspirational quote to brighten your day"
-        maxLength: 1024
-        pattern: "^[a-zA-Z0-9 !.?()']+$"
+tags:
+  - name: "daily-message"
+    description: "Endpoints for the normal user."
+  - name: "manage"
+    description: "All management Endpoints for the asmin users"
 
-  ValueScheme:
-    type: object
-    required:
-      - value
-    properties:
-      value:
-        type: string
-        description: "The message Text"
-        example: "My inspirational quote to brighten your day"
-        maxLength: 1024
-        pattern: "^[a-zA-Z0-9 !.?()']+$"
-  Error:
-    type: object
-    required:
-      - status
-      - message
-    properties:
-      status:
-        type: integer
-        description: "The status code of the error" 
-        example: e.g. 401
-        minimum: 200
-        maximum: 599
-        format: int32
-      message:
-        type: string
-        description: 'The cause of the Error.'
-  ValidationError:
-    type: object
-    required:
-      - value
-      - msg
-      - param
-      - location
-    properties:
-      value:
-        type: string
-        description: "The invalid Value"
-        maxLength: 32
-      msg:
-        type: string
-        description: 'The Error message.'
-      param:
-        type: string
-        description: "The invalid parameter"
-        example: "key"
-        maxLength: 64
-      location:
-        type: "string"
-        description: "Where the invalid Parameter is located"
-        maxLength: 16
 
 externalDocs:
   description: "README.md on GitHub project"
   url: "https://github.com/Thorsten1/daily_message#readme"
   
-responses:
-  401:
-      description: "Invalid Authorization Token"
-      schema:
-        $ref: '#/definitions/Error'
-  403:
-      description: "Forbidden: The rewuest requires Admin access"
-      schema:
-        $ref: '#/definitions/Error'
-  404:
-      description: "Not Found"
-      schema:
-        $ref: '#/definitions/Error'
-  422:
-      description: "Unprocessable Entity: The Key was not in the right format"
-      schema:
-        $ref: '#/definitions/ValidationError'
-  429:
-      description: "To Many Requests"
-      schema:
-        $ref: '#/definitions/Error'
-  500:
-      description: "Authorization isn't configured properly"
-      schema:
-        $ref: '#/definitions/Error'
+

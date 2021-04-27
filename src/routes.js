@@ -6,7 +6,7 @@ const {validateKey, validateValue} = require('./input_validation');
 module.exports = function (app){
     // get endpoint to receive random message
     // TODO: implement daily check so only one message per day
-    app.get('/', async (req, res) => {
+    app.get('/daily-message', async (req, res) => {
         // get all keys with the given prefix
         let keys = await client.list(config_data.key_prefix)
         // get random element
