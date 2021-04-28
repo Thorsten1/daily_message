@@ -1,0 +1,11 @@
+# action.yml
+name: 'openapiv3-lint'
+description: 'Check the openapi config using openapiv3-lint'
+outputs:
+  result: # id of output
+    description: 'The result for openapiv3-lint'
+runs:
+  using: 'docker'
+  image: "docker://bbvalabs/openapiv3-lint:1.0.0"
+  args:
+    - "./swagger.yaml"

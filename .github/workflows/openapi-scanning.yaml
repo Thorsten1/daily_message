@@ -1,0 +1,18 @@
+on:
+  pull_request: {}
+  push:
+    branches:
+      - main
+      - master
+name: APICheck
+jobs:
+  api_scan:
+    name: oas-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: "API Check"
+        uses: "./.github/actions/api_check"
+      - name: "API Lint"
+        uses: "./.github/actions/api_lint"

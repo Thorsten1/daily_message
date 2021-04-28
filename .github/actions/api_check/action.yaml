@@ -1,0 +1,11 @@
+# action.yml
+name: 'oas-check'
+description: 'Check the swagger file using oas-checl'
+outputs:
+  result: # id of output
+    description: 'The result for oas-check'
+runs:
+  using: 'docker'
+  image: "docker://bbvalabs/oas-check:1.0.0"
+  args:
+    - "./swagger.yaml"
