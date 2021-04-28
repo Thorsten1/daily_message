@@ -2,7 +2,6 @@ openapi: "3.0.3"
 info:
   description: "This is a small API to retrieve a daily message. e.g. for an iOS shortcut or widget"
   version: "1.0.1"
-  termsOfService: "#/info/termsOfService"
   title: "Daily Message"
   contact:
     name: "Thorsten Rösler"
