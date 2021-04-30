@@ -5,12 +5,13 @@ const {validateKey, validateValue} = require('./input_validation');
 
 module.exports = function (app){
     // get endpoint to receive random message
-    // TODO: implement daily check so only one message per day
     app.get('/daily-message', async (req, res) => {
         // get all keys with the given prefix
         let keys = await client.list(config_data.key_prefix)
-        // get random element
-        let result_key = keys[Math.floor(Math.random() * keys.length)]
+        // get current day of the year for selecting an item
+        let today = Math.floor((Date.now() - Date.parse(new Date().getFullYear(), 0, 0)) / 86400000)
+        // modulo check to prevent exceeding the array length
+        let result_key = keys[today % keys.length]
         let result = await client.get(result_key, {raw:true})
         return res.json({"message": result})
     });
