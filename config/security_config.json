@@ -7,7 +7,7 @@
   "value_length": 1024,
   "user_endpoints": [
     {
-      "route": "/",
+      "route": "/daily-message",
       "method": "GET"
     }
   ]

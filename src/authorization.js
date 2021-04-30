@@ -48,8 +48,8 @@ module.exports = {
         // To make endpoints accessible for the user add them to the user_endpoints list in the security_config.json
         let needsAdmin = true
         // remove param from URL (split into list at slash, remove last element and rejoin (maybe replace with regex)
-        // add a special case for the baseurl endpoint so that this would not trigger when the replace fails
-        let endpointURL = (req.url !== '/')? req.url.split('/').slice(0,-1).join('/') : '/'
+        // add a special case for when the base url has only 1 slash
+        let endpointURL = req.url.split('/').length > 2 ? req.url.split('/').slice(0,-1).join('/') : req.url
         // if the endpoint (route + http method) is within the user_endpoints list no admin rights are required
         for (let i of config_data.user_endpoints) if (endpointURL === i.route && req.method === i.method){
             needsAdmin = false
