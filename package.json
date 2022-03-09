@@ -22,7 +22,7 @@
   "homepage": "https://github.com/Thorsten1/daily_message#readme",
   "dependencies": {
     "@replit/database": "^2.0.1",
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.19.2",
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "express-rate-limit": "^5.2.6",
